@@ -1,0 +1,125 @@
+﻿----------------------------------------------------------------------------------------------------------------
+                ServerApp Assignment Documentation - Matan Danieli :)
+----------------------------------------------------------------------------------------------------------------
+
+1. Overview
+-----------
+The ServerApp is a C# .NET application designed to demonstrate a server that interacts with a MySQL database.
+The application supports CRUD (Create, Read, Update, Delete) operations for managing user data,
+and it also includes a batch service for processing user records (e.g., simulating email notifications).
+
+2. Objectives
+-------------
+- To build a server application using the C# .NET framework.
+- To implement controllers and models for data management.
+- To integrate a batch service for periodic operations.
+- To connect and interact with a MySQL database.
+- To expose a simple RESTful API using an HTTP server.
+
+3. Tools and Technologies I Used
+------------------------------
+- **Visual Studio Enterprise:**  
+  Used as the integrated development environment (IDE) to create, manage, and debug the project.
+  
+- **.NET 5.0 (or later):**  
+  The target framework for the application, providing modern C# language features and performance improvements.
+  
+- **MySQL Server:**  
+  The relational database system used to store user data.
+  
+- **MySQL Workbench:**  
+  A graphical tool for managing MySQL databases, used to set up the database and verify tables.
+  
+- **MySQL Connector/NET (MySql.Data):**  
+  A NuGet package that allows the application to connect to and interact with the MySQL database using ADO.NET.
+  
+- **HTTP Listener (System.Net.HttpListener):**  
+  A built-in .NET class used to create a simple HTTP server for handling RESTful API calls.
+  
+- **Postman:**  
+  A tool used to test HTTP endpoints by sending requests (POST, GET, PUT, DELETE) and verifying responses.
+
+4. Project Structure
+--------------------
+The project is organized into several folders and files:
+  
+- **Models/User.cs:**  
+  Contains the User class that represents the structure of user data. This class maps directly to the Users table in MySQL.
+
+- **Controllers/UserController.cs:**  
+  Implements the methods to perform CRUD operations (Add, Retrieve, Update, Delete) on the Users table.
+  Uses parameterized SQL queries to interact with the database.
+
+- **Services/UserBatchService.cs:**  
+  Provides a method to process all user records in batch (e.g., simulating the sending of emails).
+  Also includes functionality for scheduled batch processing using a Timer.
+
+- **ServerComponents/Server.cs:**  
+  Sets up an HTTP server using the HttpListener class.
+  This component listens for incoming HTTP requests on a specified port (e.g., 8080) 
+  and routes the requests to the appropriate controller methods.
+
+- **Program.cs:**  
+  Acts as the entry point of the application.
+  I provided a simple menu to choose between running the HTTP server or executing the batch service.
+
+- **TestClients:**  
+  Contains code for testing the server endpoints using HttpClient.
+
+5. How the Application Works
+----------------------------
+- **Database Setup:**  
+  Before running the application, a MySQL database named 'MyDatabase' is created with a table 'Users' using the provided
+  SQL script. The table contains columns: ID, Name, Email, and Password.
+
+- **Model-Controller Interaction:**  
+  The User model defines the data structure. The UserController contains methods that use the MySQL
+  Connector to execute SQL commands against the database, such as inserting a new user or retrieving user data.
+
+- **HTTP Server:**  
+  The Server class creates an HTTP listener that waits for requests.
+  Based on the URL path (e.g., /user/add) and the HTTP method (POST, GET, PUT, DELETE),
+  the server routes the request to the corresponding method in the UserController.
+
+- **Batch Service:**  
+  The UserBatchService retrieves all users from the database and performs batch operations.
+  For instance, it prints messages simulating email sending, and it can be scheduled to run at specific intervals.
+
+6. Testing the Application
+--------------------------
+- **Using Postman:**  
+  - **POST /user/add:** Send a JSON body with user details to add a new user.
+  - **GET /user/get?id=1:** Retrieve the details of a user by ID.
+  - **PUT /user/update:** Update a user�s information by sending updated JSON data.
+  - **DELETE /user/delete?id=1:** Delete a user by providing the user ID as a query parameter.
+
+- **Using a Console Test Client:**  
+  A separate console application using HttpClient created to send HTTP requests and display responses in the console.
+
+- **Verification in MySQL Workbench:**  
+  After performing operations, use MySQL Workbench or the MySQL command-line client to execute queries
+  (e.g., SELECT * FROM Users) and verify that the database reflects the changes made via the API.
+
+7. Conclusion and Future Work
+-----------------------------
+This assignment demonstrates the integration of a .NET application with a MySQL database through a RESTful API.
+The project covers essential aspects such as CRUD operations, batch processing, and HTTP server implementation.
+
+Future improvements could include:
+- Implementing better error handling and logging.
+- Enhancing security by not using the root user for database connections.
+- Using an ORM like Entity Framework Core for more robust database interactions.
+- Adding authentication and authorization mechanisms.
+
+8. Personal Reflection
+----------------------
+Working on this assignment helped me deepen my understanding of (although i knew before :)):
+- How different layers (model, controller, service) interact within an application.
+- The importance of proper database connectivity and parameterized queries to prevent SQL injection.
+- Building and testing a simple HTTP server using HttpListener.
+- Using tools like Postman and MySQL Workbench to test and verify application behavior.
+
+I chose these tools and approaches because they provided a straightforward way to build a functional prototype
+while focusing on the core learning objectives of the assignment.
+
+---------------------------------------------------------
